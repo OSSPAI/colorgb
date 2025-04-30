@@ -15,9 +15,38 @@ function getRandom(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
+function getRandomFloat(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+function getRGB1() {
+    return `rgb(${getRandom(0, 256)}, ${getRandom(0, 256)}, ${getRandom(0, 256)})`
+}
+
+function getRGB2() {
+    return `rgb(${getRandom(0, 256)} ${getRandom(0, 256)} ${getRandom(0, 256)})`
+}
+
+function getRGBA1() {
+    return `rgba(${getRandom(0, 256)}, ${getRandom(0, 256)}, ${getRandom(0, 256)}, ${getRandomFloat(0, 1).toFixed(2)})`
+}
+
+function getRGBA2() {
+    return `rgba(${getRandom(0, 256)} ${getRandom(0, 256)} ${getRandom(0, 256)} / ${getRandomFloat(0, 1).toFixed(2)})`
+}
+
 const colorsCount = 1000000
 for (let i = 0; i < colorsCount; i++) {
-    colors.push(`rgb(${getRandom(0, 256)}, ${getRandom(0, 256)}, ${getRandom(0, 256)})`)
+    const ver = getRandom(0, 101)
+    if (ver <= 25) {
+        colors.push(getRGB1())
+    } else if (ver <= 50) {
+        colors.push(getRGB2())
+    } else if (ver <= 75) {
+        colors.push(getRGBA1())
+    } else if (ver <= 100) {
+        colors.push(getRGBA2())
+    }
 }
 
 export const suite = new Suite({ reporter: makeMarkdownReporter('RGB') });

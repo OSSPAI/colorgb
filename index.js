@@ -26,6 +26,13 @@ export function parse(colorStr) {
                 B: parseInt(numbers[2]),
                 A: 1,
             }
+        case 'rgba':
+            return {
+                R: parseInt(numbers[0]),
+                G: parseInt(numbers[1]),
+                B: parseInt(numbers[2]),
+                A: parseFloat(numbers[3]),
+            }
     }
 
     return { R: 0, G: 0, B: 0, A: 1 }
@@ -51,29 +58,29 @@ export function parseHex(colorStr) {
     const strLength = colorStr.length
     switch (strLength) {
         case 3: {
-            r = ((parsedString & 0xf00) >>> 8) * 17;
-            g = ((parsedString & 0x0f0) >>> 4) * 17;
-            b = (parsedString & 0x00f) * 17;
+            r = ((parsedString >>> 8) & 0xf) * 17;
+            g = ((parsedString >>> 4) & 0xf) * 17;
+            b = (parsedString & 0xf) * 17;
             break;
         }
         case 4: {
-            r = ((parsedString & 0xf000) >>> 12) * 17;
-            g = ((parsedString & 0x0f00) >>> 8) * 17;
-            b = ((parsedString & 0x00f0) >>> 4) * 17;
-            a = (parsedString & 0x000f) * 17 / 255;
+            r = ((parsedString >>> 12) & 0xf) * 17;
+            g = ((parsedString >>> 8) & 0xf) * 17;
+            b = ((parsedString >>> 4) & 0xf) * 17;
+            a = (parsedString & 0xf) * 17 / 255;
             break;
         }
         case 6: {
-            r = (parsedString & 0xff0000) >>> 16;
-            g = (parsedString & 0x00ff00) >>> 8;
-            b = parsedString & 0x0000ff;
+            r = (parsedString >>> 16 ) & 0xff;
+            g = (parsedString >>> 8 ) & 0xff;
+            b = parsedString & 0xff;
             break;
         }
         case 8: {
-            r = (parsedString & 0xff000000) >>> 24;
-            g = (parsedString & 0x00ff0000) >>> 16;
-            b = (parsedString & 0x0000ff00) >>> 8;
-            a = (parsedString & 0x000000ff) / 255;
+            r = (parsedString >>> 24) & 0xff;
+            g = (parsedString >>> 16) & 0xff;
+            b = (parsedString >>> 8) & 0xff;
+            a = (parsedString & 0xff) / 255;
             break;
         }
     }

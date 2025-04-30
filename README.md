@@ -22,6 +22,8 @@ parse('#FF0000')
 - `Color names`
 - `#RGB[A]`
 - `#RRGGBB[AA]`
+- `rgb(100, 100, 100)/rgb(100 100 100)`
+- `rgba(100, 100, 100, 0.8)/rgba(100 100 100 / 0.8)`
 
 ## Benchmarks
 

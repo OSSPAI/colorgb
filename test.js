@@ -22,6 +22,22 @@ const testCases = [
         input: 'rgb(50, 100, 150)',
         result: { R: 50, G: 100, B: 150, A: 1 },
     },
+    {
+        input: 'rgb(50 100 150)',
+        result: { R: 50, G: 100, B: 150, A: 1 },
+    },
+    {
+        input: 'chocolate',
+        result: { R: 210, G: 105, B: 30, A: 1 },
+    },
+    {
+        input: 'rgba(50, 100, 150, 0.8)',
+        result: { R: 50, G: 100, B: 150, A: .8 },
+    },
+    {
+        input: 'rgba(50 100 150 / 0.8)',
+        result: { R: 50, G: 100, B: 150, A: .8 },
+    },
 ]
 
 for (const testCase of testCases) {
