@@ -1,6 +1,7 @@
 import { Suite } from 'bench-node';
 import assert from 'assert'
 import { makeMarkdownReporter } from './markdownReporter.js'
+import { colors as colorObj } from '../colors.js'
 
 import colorParse from 'color-parse'
 import parseColor from 'parse-color'
@@ -9,24 +10,18 @@ import rgbcolor from 'rgbcolor'
 import colorrgba from 'color-rgba'
 import { parse as colorgbParse } from '../index.js'
 
-const hexTemplates = ["#000", "#0000", "#000000", "#00000000"]
+const colorNames = Object.keys(colorObj)
 const colors = []
 
-function getHexNumber() {
-    return (~~(Math.random() * 16)).toString(16);
-}
-
-let templateItem;
 for (let i = 0; i < 1000000; i++) {
-    templateItem = hexTemplates[Math.floor(Math.random() * hexTemplates.length)]
-    colors.push(templateItem.replace(/0/g, getHexNumber))
+    colors.push(colorNames[Math.floor(Math.random() * colorNames.length)])
 }
 
 const colorsCount = colors.length
 
-export const suite = new Suite({ reporter: makeMarkdownReporter('HEX') });
+export const suite = new Suite({ reporter: makeMarkdownReporter('Color name') });
 
-suite.add('[HEX] colorgb', (timer) => {
+suite.add('[Name] colorgb', (timer) => {
     timer.start();
     for (let i = 0; i < timer.count; i = i + 1 % colorsCount) {
         assert.ok(colorgbParse(colors[i]))
@@ -34,7 +29,7 @@ suite.add('[HEX] colorgb', (timer) => {
     timer.end(timer.count);
 });
 
-suite.add('[HEX] color-parse', (timer) => {
+suite.add('[Name] color-parse', (timer) => {
     timer.start();
     for (let i = 0; i < timer.count; i = i + 1 % colorsCount) {
         assert.ok(colorParse(colors[i]))
@@ -42,7 +37,7 @@ suite.add('[HEX] color-parse', (timer) => {
     timer.end(timer.count);
 });
 
-suite.add('[HEX] parse-color', (timer) => {
+suite.add('[Name] parse-color', (timer) => {
     timer.start();
     for (let i = 0; i < timer.count; i = i + 1 % colorsCount) {
         assert.ok(parseColor(colors[i]))
@@ -50,7 +45,7 @@ suite.add('[HEX] parse-color', (timer) => {
     timer.end(timer.count);
 });
 
-suite.add('[HEX] parse-color', (timer) => {
+suite.add('[Name] parse-color', (timer) => {
     timer.start();
     for (let i = 0; i < timer.count; i = i + 1 % colorsCount) {
         assert.ok(parseColor(colors[i]))
@@ -58,7 +53,7 @@ suite.add('[HEX] parse-color', (timer) => {
     timer.end(timer.count);
 });
 
-suite.add('[HEX] color-string', (timer) => {
+suite.add('[Name] color-string', (timer) => {
     timer.start();
     for (let i = 0; i < timer.count; i = i + 1 % colorsCount) {
         assert.ok(colorString.get.rgb(colors[i]))
@@ -66,7 +61,7 @@ suite.add('[HEX] color-string', (timer) => {
     timer.end(timer.count);
 });
 
-suite.add('[HEX] rgbcolor', (timer) => {
+suite.add('[Name] rgbcolor', (timer) => {
     timer.start();
     for (let i = 0; i < timer.count; i = i + 1 % colorsCount) {
         assert.ok(new rgbcolor(colors[i]))
@@ -74,7 +69,7 @@ suite.add('[HEX] rgbcolor', (timer) => {
     timer.end(timer.count);
 });
 
-suite.add('[HEX] colorrgba', (timer) => {
+suite.add('[Name] colorrgba', (timer) => {
     timer.start();
     for (let i = 0; i < timer.count; i = i + 1 % colorsCount) {
         assert.ok(colorrgba(colors[i]))
